@@ -11,7 +11,6 @@ public class Node {
 	public Node nextVal; // this is the next value of the current node
 	public Node prevVal; // this is the prev value of the current node
 	private Function nodeFunction; // this is the function associated with the current node
-
 	private String floatFormatter(float value) {
 		DecimalFormat df = new DecimalFormat("#.##");
 		return df.format(value);
