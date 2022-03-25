@@ -26,8 +26,8 @@ public class Interface {
 		}
 	}
 
-	public Node getOrigin() {
-	}
+	// public Node getOrigin() {
+	// }
 
 	public float addPoint(Function function, int v1, int v2) {
 		if (v1 == 0 || v2 == 0)
@@ -35,62 +35,98 @@ public class Interface {
 		else {
 			Node newNode = new Node(function, v1, v2);
 	
-			if (v1 > 0) {
-				Node ptr = origin;
-				if (origin.right == null) {
-					origin.right = new Node(new V1Axis(), v1, 0);
-					origin.right.left = origin;
-				}
-				else {
-					ptr = ptr.right;
-					while (ptr.right != null || ptr.getVariables()[0] < v1) {
-						ptr = ptr.right;
-					}
-				}
-			}
+			setAxis(newNode, v1, v2);
 
 			return newNode.getValue();
 		}
 	}
 
-	public Node removePoint(int v1, int v2) {
-	}
+	// public Node removePoint(int v1, int v2) {
+	// }
 
-	public Node getPoint(int v1, int v2) {
-	}
+	// public Node getPoint(int v1, int v2) {
+	// }
 
-	public Node[] toArray() {
-	}
+	// public Node[] toArray() {
+	// }
 
-	public float calculateValue(Function function, int v1, int v2) {
-	}
+	// public float calculateValue(Function function, int v1, int v2) {
+	// }
 
-	public float findMaxValue() {
-	}
+	// public float findMaxValue() {
+	// }
 
-	public Node findMax() {
-	}
+	// public Node findMax() {
+	// }
 
-	public float findMinValue() {
-	}
+	// public float findMinValue() {
+	// }
 
-	public Node findMin() {
-	}
+	// public Node findMin() {
+	// }
 
-	public String printFunctionValues(String functionName) {
-	}
+	// public String printFunctionValues(String functionName) {
+	// }
 
-	public int removeAllFunctionPoints(String functionName){
-	}
+	// public int removeAllFunctionPoints(String functionName){
+	// }
 
-	public int countNumberOfPoints(){
-	}
+	// public int countNumberOfPoints(){
+	// }
 
-	public int[] numPointsPerQuadrant(){
-	}
+	// public int[] numPointsPerQuadrant(){
+	// }
 
 	public void clearAllData(){
 	}
 
 	//ADD HELPER FUNCTIONS BELOW
+
+	public void setAxis(Node newNode, int v1, int v2){
+		Node ptr = origin;
+
+		if (v1 > 0) {		// set V-Axis > 0 
+			if (origin.right == null) {
+				origin.right = new Node(new V1Axis(), v1, 0);
+				origin.right.left = origin;
+			}
+			else {
+				while (ptr != null && ptr.getVariables()[0] < v1) {
+					ptr = ptr.right;
+				}
+
+				ptr.left.right = newNode;
+				newNode.left = ptr;	
+			}
+		}
+		else if (v1 < 0) {		// set V-Axis > 0 
+			if (origin.left == null) {
+				origin.left = new Node(new V1Axis(), v1, 0);
+				origin.left.right = origin;
+			}
+			else {
+				while (ptr != null && ptr.getVariables()[0] > v1) {
+					ptr = ptr.left;
+				}
+
+				ptr.right.left = newNode;
+				newNode.left = ptr;	
+			}
+		}
+
+		if (v2 > 0) {
+			if (origin.up == null) {
+				origin.up = new Node(new V1Axis(), v1, 0);
+				origin.up.down = origin;
+			}
+			else {
+				while (ptr != null && ptr.getVariables()[0] < v1) {
+					ptr = ptr.up;
+				}
+
+				ptr.left.up = newNode;
+				newNode.left = ptr;	
+			}
+		}
+	}
 }
